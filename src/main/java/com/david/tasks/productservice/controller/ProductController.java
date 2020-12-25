@@ -1,6 +1,7 @@
 package com.david.tasks.productservice.controller;
 
 import com.david.tasks.productservice.exception.ProductNotFoundException;
+import com.david.tasks.productservice.exception.ProductUnitNotFoundException;
 import com.david.tasks.productservice.modal.Product;
 import com.david.tasks.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,10 @@ public class ProductController {
 
     @GetMapping("/getPriceOfProduct/{sku}/{unit}")
     public Double getPriceOfProduct(@PathVariable String sku, @PathVariable String unit) {
-        return productService.getPriceOfProduct(sku, unit);
+        Double price = productService.getPriceOfProduct(sku, unit);
+        if (price == null) {
+            throw new ProductUnitNotFoundException("Cannot find price for product ", sku, " and unit ", unit);
+        }
+        return price;
     }
 }
