@@ -24,4 +24,15 @@ public class ProductService {
         logger.info("Listing all products...");
         return filesUtil.getProductList();
     }
+
+    public Product getSingleProduct(String sku) {
+        logger.info("Finding product with SKU " + sku);
+        List<Product> products = filesUtil.getProductList();
+        for (Product product : products) {
+            if (product.getSKU().equals(sku)) {
+                return product;
+            }
+        }
+        return null;
+    }
 }
