@@ -33,4 +33,9 @@ public class ProductController {
         }
         return product;
     }
+
+    @GetMapping("/getPriceOfProduct/{sku}/{unit}")
+    public Double getPriceOfProduct(@PathVariable String sku, @PathVariable String unit) {
+        return productService.getPriceOfProduct(sku, unit);
+    }
 }

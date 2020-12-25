@@ -1,5 +1,6 @@
 package com.david.tasks.productservice.service;
 
+import com.david.tasks.productservice.modal.Price;
 import com.david.tasks.productservice.modal.Product;
 import com.david.tasks.productservice.util.FilesUtil;
 import org.slf4j.Logger;
@@ -31,6 +32,21 @@ public class ProductService {
         for (Product product : products) {
             if (product.getSKU().equals(sku)) {
                 return product;
+            }
+        }
+        return null;
+    }
+
+    public Double getPriceOfProduct(String sku, String unit) {
+        Product selectedSKU = getSingleProduct(sku);
+        logger.info("Finding price for product " + sku + " with unit " + unit);
+
+        if (selectedSKU != null && selectedSKU.getPriceList() != null) {
+
+            for (Price price : selectedSKU.getPriceList()) {
+                if (price.getUnit().equals(unit)) {
+                    return price.getValue();
+                }
             }
         }
         return null;
