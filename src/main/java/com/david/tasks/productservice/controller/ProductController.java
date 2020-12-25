@@ -1,5 +1,6 @@
 package com.david.tasks.productservice.controller;
 
+import com.david.tasks.productservice.exception.ProductNotFoundException;
 import com.david.tasks.productservice.modal.Product;
 import com.david.tasks.productservice.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,10 @@ public class ProductController {
 
     @GetMapping("/getSingleProduct/{sku}")
     public Product getSingleProduct(@PathVariable String sku) {
-        return productService.getSingleProduct(sku);
+        Product product = productService.getSingleProduct(sku);
+        if (product == null) {
+            throw new ProductNotFoundException("Cannot find SKU: ", sku);
+        }
+        return product;
     }
 }
